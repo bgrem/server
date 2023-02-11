@@ -75,7 +75,7 @@ class ImageService:
         matte = matte[0][0].data.cpu().numpy()
         return Image.fromarray(((matte * 255).astype('uint8')), mode='L')
 
-    def get_foreground(image:Image, matte:Image):
+    def remove_background(image:Image, matte:Image):
         # calculate display resolution
         w, h = image.width, image.height
         rw, rh = 800, int(h * 800 / (3 * w))
