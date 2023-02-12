@@ -13,3 +13,7 @@ Flask-Session==0.4.0
 Flask-SQLAlchemy==2.5.1
 SQLAlchemy==1.4.39
 PyJWT==2.6.0
+gunicorn==20.0.4
+bcrypt==4.0.1
+python-dotenv==0.21.1
+psycopg2-binary==2.9.5

@@ -5,11 +5,13 @@ from services.image import ImageService
 from middlewares.request_parcer import RequestParcer
 from werkzeug.datastructures import FileStorage
 from models.Error import Error
+from middlewares.auth import AuthMiddleware
 
 image_view = Blueprint("image",__name__)
 
 @image_view.post("/remove_background")
 @RequestParcer.validate_request({},{"image":None})
+@AuthMiddleware.auth()
 def remove_background():
     image_file:FileStorage = request.files.get("image")
     if not image_file:

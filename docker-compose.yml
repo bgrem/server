@@ -1,0 +1,28 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - /var/lib/postgresql/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - webnet
+    deploy:
+      mode: global
+    ports:
+      - '5432:5432'
+  finstackdashboard:
+    image: <TBD>
+    ports:
+      - 8070:8070
+    environment:
+    networks:
+      - webnet
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+networks:
+  webnet:
