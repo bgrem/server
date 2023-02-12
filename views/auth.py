@@ -65,3 +65,15 @@ def add_admin():
             {"user_id": user_object.user_id, "jwt_token": jwt_token},
         )
     return CommonUtils.get_response("Register failed", 400)
+
+
+@auth_view.get("/check_admin")
+@AuthMiddleware.auth(AuthConstants.ADMIN_ROLE)
+def check_admin():
+    return CommonUtils.get_response("valid",200)
+
+
+@auth_view.get("/check")
+@AuthMiddleware.auth()
+def check():
+    return CommonUtils.get_response("valid",200)
