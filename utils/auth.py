@@ -1,20 +1,21 @@
 import jwt
 import os
 import bcrypt
+from utils.env import EnvironmentVariables
 
 class AuthUtils:
     JWT_ALGORITHM = "HS256"
 
     def encode_jwt_token(payload: dict) -> str:
         try:
-            jwt_token = jwt.encode(payload, os.environ["JWT_SECRET"], AuthUtils.JWT_ALGORITHM)
+            jwt_token = jwt.encode(payload, EnvironmentVariables.get_environment_variable(EnvironmentVariables.JWT_SECRET), AuthUtils.JWT_ALGORITHM)
             return jwt_token
         except Exception as error:
             return None
 
     def decode_jwt_token(jwt_token: str) -> dict:
         try:
-            payload = jwt.decode(jwt_token, os.environ["JWT_SECRET"], AuthUtils.JWT_ALGORITHM)
+            payload = jwt.decode(jwt_token, EnvironmentVariables.get_environment_variable(EnvironmentVariables.JWT_SECRET), AuthUtils.JWT_ALGORITHM)
             return payload
         except Exception as error:
             return None

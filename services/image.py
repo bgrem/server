@@ -6,6 +6,11 @@ import torch.nn.functional as F
 import torchvision.transforms as transforms
 from content.MODNet.src.models.modnet import MODNet
 from constants.image import ImageConstants
+from cloudinary import uploader
+from io import BytesIO
+import base64
+from helpers.Image import ImageHelper
+from repository.image import ImageRepository
 
 class ImageService:
     def get_matte(image:Image):
@@ -92,3 +97,17 @@ class ImageService:
         foreground = image * matte + np.full(image.shape, 255) * (1 - matte)
 
         return Image.fromarray(np.uint8(foreground))
+
+    def upload_image(image:BytesIO):
+        data64 = base64.b64encode(image.getvalue())
+        uploaded_image = uploader.upload(u'data:img/jpeg;base64,'+data64.decode('utf-8'))
+        return uploaded_image
+
+    def add_image(image:ImageHelper):
+        return ImageRepository.add_image(image)
+
+    def get_all_images():
+        return ImageRepository.get_all_images()
+
+    def get_images_of_user(user_id:str):
+        return ImageRepository.get_images_of_user(user_id)
